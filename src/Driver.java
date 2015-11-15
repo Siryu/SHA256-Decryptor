@@ -5,11 +5,14 @@ import java.util.Scanner;
 import Host.Distributor;
 import Host.WordDownload;
 import distributee.Distributee;
+import distributee.NetworkDistributee;
 import distributee.ThreadDistributee;
 
 public class Driver {
 	private final static int amountPerDistribution = 100;
-	private final static int topCountOfWords = 40;
+	private final static int topCountOfWords = 100;
+	private final static int port = 45678;
+	private final static String ip = "localhost";
 	private Distributor distributor;
 	
 	// take made up string of words hash it and compare to the given
@@ -36,6 +39,7 @@ public class Driver {
 		for(int i = 0; i < 4; i++) {
 			distributees.add(new ThreadDistributee());
 		}
+		distributees.add(new NetworkDistributee(ip, port));
 		this.distributor = new Distributor(distributees, this.fourLetterWords, this.fiveLetterWords, toDecode, amountPerDistribution);
 		distributor.start();
 	}
